@@ -8,6 +8,7 @@ enum BrowserAgent {
   Firefox,
   Explorer,
   Edge,
+  EdgeChromium,
 }
 
 class Browser {
@@ -22,6 +23,7 @@ class Browser {
     BrowserAgent.Firefox: 'Firefox',
     BrowserAgent.Explorer: 'Internet Explorer',
     BrowserAgent.Edge: 'Edge',
+    BrowserAgent.EdgeChromium: 'Chromium Edge',
   };
 
   _BrowserDetection _detected;
@@ -39,6 +41,11 @@ class Browser {
   /// Detect current browser if it is known
   _detectBrowser() {
     final List<_BrowserDetection> detections = <_BrowserDetection>[
+      _BrowserDetection(
+        browserAgent: BrowserAgent.EdgeChromium,
+        string: window.navigator.userAgent,
+        subString: 'Edg',
+      ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Chrome,
         string: window.navigator.userAgent,
@@ -78,7 +85,7 @@ class Browser {
       if (detection.string.contains(detection.subString)) {
         _detected = detection;
 
-        final String versionSearchString = detection.versionSearch ?? _browserIdentifiers[browserAgent];
+        final String versionSearchString = detection.versionSearch ?? detection.subString;
         String versionFromString = window.navigator.userAgent;
         int index = versionFromString.indexOf(versionSearchString);
         if (index == -1) {
