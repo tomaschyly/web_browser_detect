@@ -1,6 +1,6 @@
 name: web_browser_detect
 description: FlutterWeb browser detection package.
-version: 1.0.1
+version: 1.0.2
 homepage: https://tomas-chyly.com/en/project/web-browser-detect-flutter/
 repository: https://github.com/tomaschyly/web_browser_detect
 issue_tracker: https://github.com/tomaschyly/web_browser_detect/issues
@@ -12,8 +12,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  universal_html: ^1.2.3
 
 dev_dependencies:
   flutter_test:

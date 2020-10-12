@@ -1,3 +1,7 @@
+## [1.0.2] - 12.10.2020
+
+* Remove unnecessary package
+
 ## [1.0.1] - 30.09.2020
 
 * Detect Chromium based Edge
