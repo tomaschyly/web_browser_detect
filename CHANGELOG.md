@@ -1,3 +1,7 @@
+## [1.0.2+1] - 18.10.2020
+
+* Add an example
+
 ## [1.0.2] - 12.10.2020
 
 * Remove unnecessary package
