@@ -1,3 +1,7 @@
+## [1.0.2+2] - 18.12.2020
+
+* Add the example the correct way
+
 ## [1.0.2+1] - 18.10.2020
 
 * Add an example
