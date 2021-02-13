@@ -13,15 +13,13 @@ enum BrowserAgent {
 }
 
 class Browser {
-  BrowserAgent get browserAgent =>
-      _detected?.browserAgent ?? BrowserAgent.UnKnown;
+  BrowserAgent get browserAgent => _detected?.browserAgent ?? BrowserAgent.UnKnown;
 
   String get browser => _browserIdentifiers[browserAgent];
 
   String get version => _version;
 
-  static const Map<BrowserAgent, String> _browserIdentifiers =
-      <BrowserAgent, String>{
+  static const Map<BrowserAgent, String> _browserIdentifiers = <BrowserAgent, String>{
     BrowserAgent.UnKnown: 'Unknown browser',
     BrowserAgent.Chrome: 'Chrome',
     BrowserAgent.Safari: 'Safari',
@@ -90,8 +88,7 @@ class Browser {
       if (detection.string.contains(detection.subString)) {
         _detected = detection;
 
-        final String versionSearchString =
-            detection.versionSearch ?? detection.subString;
+        final String versionSearchString = detection.versionSearch ?? detection.subString;
         String versionFromString = window.navigator.userAgent;
         int index = versionFromString.indexOf(versionSearchString);
         if (index == -1) {
@@ -102,8 +99,7 @@ class Browser {
         if (index == -1) {
           _version = 'Unknown version';
         } else {
-          _version = versionFromString
-              .substring(index + versionSearchString.length + 1);
+          _version = versionFromString.substring(index + versionSearchString.length + 1);
 
           if (_version.split(' ').length > 1) {
             _version = _version.split(' ').first;
