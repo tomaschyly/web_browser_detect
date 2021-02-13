@@ -1,3 +1,8 @@
+## [1.0.3] - 13.2.2021
+
+* Reorganize code into private/public
+* As requested return back to universal_html from dart:html
+
 ## [1.0.2+2] - 18.12.2020
 
 * Add the example the correct way

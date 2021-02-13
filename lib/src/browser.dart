@@ -1,6 +1,5 @@
-import 'dart:html';
-
 import 'package:flutter/foundation.dart';
+import 'package:universal_html/html.dart';
 
 enum BrowserAgent {
   UnKnown,

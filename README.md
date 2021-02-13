@@ -16,7 +16,7 @@ This package helps you to detect current browser and version of the browser.
 In your project's `pubspec.yaml` add:
 ```yaml
 dependencies:
-  web_browser_detect: ^1.0.2+1
+  web_browser_detect: ^1.0.3
 ```
 
 ## How to Use
@@ -24,13 +24,13 @@ dependencies:
 1. If your IDE does not autoImport, add manually:
 
 ```dart
-import 'package:web_browser_detect/browser.dart';
+import 'package:web_browser_detect/web_browser_detect.dart';
 ```
 
 2. Create Browser object and then you can access detected values.
 
 ```dart
-import 'package:web_browser_detect/browser.dart';
+import 'package:web_browser_detect/web_browser_detect.dart';
 
 void main() {
   final browser = Browser();
