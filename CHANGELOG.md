@@ -1,3 +1,7 @@
+## [1.0.4] - 18.2.2021
+
+* Alternative method which returns null on non-web platforms
+
 ## [1.0.3] - 13.2.2021
 
 * Reorganize code into private/public

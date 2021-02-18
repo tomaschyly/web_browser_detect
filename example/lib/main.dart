@@ -9,7 +9,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final browser = Browser();
+    // final browser = Browser(); // throws exception if not on web platform
+
+    final browser = Browser.detectOrNull(); // return null if not on web platform
 
     return MaterialApp(
       title: 'web_browser_detect Demo',
@@ -22,8 +24,8 @@ class MyApp extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('The browser is ${browser.browser}'),
-            Text('Browser version is ${browser.version}'),
+            Text('The browser is ${browser?.browser ?? 'Wrong platform'}'),
+            Text('Browser version is ${browser?.version ?? 'Wrong platform'}'),
           ],
         ),
       ),

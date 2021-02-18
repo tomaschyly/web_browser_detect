@@ -40,6 +40,15 @@ class Browser {
     _detectBrowser();
   }
 
+  /// Alternative initialization for crossplatform, returns null instead of Exception
+  static Browser detectOrNull() {
+    try {
+      return Browser();
+    } catch (e, t) {
+      return null;
+    }
+  }
+
   /// Detect current browser if it is known
   _detectBrowser() {
     final List<_BrowserDetection> detections = <_BrowserDetection>[
