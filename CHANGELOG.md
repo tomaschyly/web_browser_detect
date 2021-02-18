@@ -1,3 +1,7 @@
+## [1.0.4+1] - 18.2.2021
+
+* Updated readme
+
 ## [1.0.4] - 18.2.2021
 
 * Alternative method which returns null on non-web platforms
