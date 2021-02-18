@@ -47,7 +47,7 @@ import 'package:web_browser_detect/web_browser_detect.dart';
 void main() {
   final browser = Browser.detectOrNull();
 
-  print('${browser.browser} ${browser.version}');
+  print('${browser?.browser ?? 'Wrong platform'} ${browser?.version ?? 'Wrong platform'}');
 }
 ```
 
