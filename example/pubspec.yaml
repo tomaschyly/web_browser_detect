@@ -17,5 +17,7 @@ dependencies:
   web_browser_detect:
     path: ../
 
+  universal_html: ^1.2.4
+
 flutter:
   uses-material-design: true

@@ -37,7 +37,12 @@ class Browser {
       throw Exception('Browser is supported only on the web platform');
     }
 
-    _detectBrowser();
+    _detectBrowser(userAgent: window.navigator.userAgent, vendor: window.navigator.vendor);
+  }
+
+  /// Browser initialization from provided userAgent or vendor, works crossplatform
+  Browser.detectFrom({@required String userAgent, @required String vendor}) {
+    _detectBrowser(userAgent: userAgent, vendor: vendor);
   }
 
   /// Alternative initialization for crossplatform, returns null instead of Exception
@@ -50,44 +55,44 @@ class Browser {
   }
 
   /// Detect current browser if it is known
-  _detectBrowser() {
+  _detectBrowser({@required String userAgent, @required String vendor}) {
     final List<_BrowserDetection> detections = <_BrowserDetection>[
       _BrowserDetection(
         browserAgent: BrowserAgent.EdgeChromium,
-        string: window.navigator.userAgent,
+        string: userAgent,
         subString: 'Edg',
       ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Chrome,
-        string: window.navigator.userAgent,
+        string: userAgent,
         subString: 'Chrome',
       ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Safari,
-        string: window.navigator.vendor,
+        string: vendor,
         subString: 'Apple',
         versionSearch: 'Version',
       ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Firefox,
-        string: window.navigator.userAgent,
+        string: userAgent,
         subString: 'Firefox',
       ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Explorer,
-        string: window.navigator.userAgent,
+        string: userAgent,
         subString: 'MSIE',
         versionSearch: 'MSIE',
       ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Explorer,
-        string: window.navigator.userAgent,
+        string: userAgent,
         subString: 'Trident',
         versionSearch: 'rv',
       ),
       _BrowserDetection(
         browserAgent: BrowserAgent.Edge,
-        string: window.navigator.userAgent,
+        string: userAgent,
         subString: 'Edge',
       ),
     ];
@@ -97,7 +102,7 @@ class Browser {
         _detected = detection;
 
         final String versionSearchString = detection.versionSearch ?? detection.subString;
-        String versionFromString = window.navigator.userAgent;
+        String versionFromString = userAgent;
         int index = versionFromString.indexOf(versionSearchString);
         if (index == -1) {
           versionFromString = window.navigator.appVersion;

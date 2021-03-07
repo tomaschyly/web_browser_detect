@@ -1,3 +1,7 @@
+## [1.1.0] - 7.3.2021
+
+* Detect from provided userAgent & vendor
+
 ## [1.0.4+1] - 18.2.2021
 
 * Updated readme
