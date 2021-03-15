@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final browser = Browser(); // throws exception if not on web platform
 
-    // final browser = Browser.detectOrNull(); // return null if not on web platform
+    final browser = Browser.detectOrNull(); // return null if not on web platform
 
     // You provide your own userAgent & vendor, works crossplatform
-    final browser = Browser.detectFrom(userAgent: window.navigator.userAgent, vendor: window.navigator.vendor);
+    // final browser = Browser.detectFrom(userAgent: window.navigator.userAgent, vendor: window.navigator.vendor);
 
     return MaterialApp(
       title: 'web_browser_detect Demo',

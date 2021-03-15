@@ -14,7 +14,7 @@ enum BrowserAgent {
 class Browser {
   BrowserAgent get browserAgent => _detected?.browserAgent ?? BrowserAgent.UnKnown;
 
-  String get browser => _browserIdentifiers[browserAgent];
+  String get browser => _browserIdentifiers[browserAgent]!;
 
   String get version => _version;
 
@@ -28,8 +28,8 @@ class Browser {
     BrowserAgent.EdgeChromium: 'Chromium Edge',
   };
 
-  _BrowserDetection _detected;
-  String _version;
+  _BrowserDetection? _detected;
+  String _version = 'Unknown version';
 
   /// Browser initialization
   Browser() {
@@ -41,12 +41,12 @@ class Browser {
   }
 
   /// Browser initialization from provided userAgent or vendor, works crossplatform
-  Browser.detectFrom({@required String userAgent, @required String vendor}) {
+  Browser.detectFrom({required String userAgent, required String vendor}) {
     _detectBrowser(userAgent: userAgent, vendor: vendor);
   }
 
   /// Alternative initialization for crossplatform, returns null instead of Exception
-  static Browser detectOrNull() {
+  static Browser? detectOrNull() {
     try {
       return Browser();
     } catch (e, t) {
@@ -55,7 +55,7 @@ class Browser {
   }
 
   /// Detect current browser if it is known
-  _detectBrowser({@required String userAgent, @required String vendor}) {
+  _detectBrowser({required String userAgent, required String vendor}) {
     final List<_BrowserDetection> detections = <_BrowserDetection>[
       _BrowserDetection(
         browserAgent: BrowserAgent.EdgeChromium,
@@ -129,13 +129,13 @@ class _BrowserDetection {
   final BrowserAgent browserAgent;
   final String string;
   final String subString;
-  final String versionSearch;
+  final String? versionSearch;
 
   /// BrowserDetection initialization
   _BrowserDetection({
-    this.browserAgent,
-    this.string,
-    this.subString,
+    required this.browserAgent,
+    required this.string,
+    required this.subString,
     this.versionSearch,
   });
 }

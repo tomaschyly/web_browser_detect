@@ -1,3 +1,7 @@
+## [2.0.0] - 15.3.2021
+
+* Sound null-safety
+
 ## [1.1.0] - 7.3.2021
 
 * Detect from provided userAgent & vendor
