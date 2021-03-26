@@ -1,3 +1,8 @@
+## [2.0.1] - 26.3.2021
+
+* Fix forgotten refactor & workaround for mobile bug in dependency 
+* Update main dependency
+
 ## [2.0.0] - 15.3.2021
 
 * Sound null-safety

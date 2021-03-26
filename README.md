@@ -16,7 +16,7 @@ This package helps you to detect current browser and version of the browser.
 In your project's `pubspec.yaml` add:
 ```yaml
 dependencies:
-  web_browser_detect: ^2.0.0
+  web_browser_detect: ^2.0.1
 ```
 
 ## How to Use
@@ -51,13 +51,13 @@ void main() {
 }
 ```
 
-If you want to detect Browser on other platform from your own provided userAgent & vendor
+If you want to detect Browser on other platform from your own provided userAgent, vendor & appVersion.
 
 ```dart
 import 'package:web_browser_detect/web_browser_detect.dart';
 
 void main() {
-  final browser = Browser.detectFrom(userAgent: userAgent, vendor: vendor);
+  final browser = Browser.detectFrom(userAgent: userAgent, vendor: vendor, appVersion: appVersion);
 
   print('${browser.browser} ${browser.version}');
 }

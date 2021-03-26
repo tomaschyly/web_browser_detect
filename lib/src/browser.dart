@@ -37,12 +37,20 @@ class Browser {
       throw Exception('Browser is supported only on the web platform');
     }
 
-    _detectBrowser(userAgent: window.navigator.userAgent, vendor: window.navigator.vendor);
+    _detectBrowser(
+      userAgent: window.navigator.userAgent,
+      vendor: window.navigator.vendor,
+      appVersion: window.navigator.appVersion ?? '', // The ?? are because of bug when building for mobile
+    );
   }
 
   /// Browser initialization from provided userAgent or vendor, works crossplatform
-  Browser.detectFrom({required String userAgent, required String vendor}) {
-    _detectBrowser(userAgent: userAgent, vendor: vendor);
+  Browser.detectFrom({
+    required String userAgent,
+    required String vendor,
+    required String appVersion,
+  }) {
+    _detectBrowser(userAgent: userAgent, vendor: vendor, appVersion: appVersion);
   }
 
   /// Alternative initialization for crossplatform, returns null instead of Exception
@@ -55,7 +63,11 @@ class Browser {
   }
 
   /// Detect current browser if it is known
-  _detectBrowser({required String userAgent, required String vendor}) {
+  _detectBrowser({
+    required String userAgent,
+    required String vendor,
+    required String appVersion,
+  }) {
     final List<_BrowserDetection> detections = <_BrowserDetection>[
       _BrowserDetection(
         browserAgent: BrowserAgent.EdgeChromium,
@@ -105,7 +117,7 @@ class Browser {
         String versionFromString = userAgent;
         int index = versionFromString.indexOf(versionSearchString);
         if (index == -1) {
-          versionFromString = window.navigator.appVersion;
+          versionFromString = appVersion;
           index = versionFromString.indexOf(versionSearchString);
         }
 
