@@ -1,3 +1,7 @@
+## [2.0.2] - 13.4.2021
+
+* Remove appVersion warning
+
 ## [2.0.1] - 26.3.2021
 
 * Fix forgotten refactor & workaround for mobile bug in dependency 

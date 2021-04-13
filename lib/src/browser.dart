@@ -37,10 +37,15 @@ class Browser {
       throw Exception('Browser is supported only on the web platform');
     }
 
+    String appVersion = '';
+    if (window.navigator.appVersion is String) {
+      appVersion = window.navigator.appVersion;
+    }
+
     _detectBrowser(
       userAgent: window.navigator.userAgent,
       vendor: window.navigator.vendor,
-      appVersion: window.navigator.appVersion ?? '', // The ?? are because of bug when building for mobile
+      appVersion: appVersion,
     );
   }
 
