@@ -13,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  universal_html: ^2.0.7
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_test:

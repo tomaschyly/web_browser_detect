@@ -12,12 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.4
 
   web_browser_detect:
     path: ../
 
-  universal_html: ^2.0.7
+  universal_html: ^2.0.8
 
 flutter:
   uses-material-design: true
