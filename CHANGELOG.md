@@ -1,3 +1,8 @@
+## [2.0.3] - 2.6.2022
+
+* Update to latest dependencies
+* Works with Flutter 3
+
 ## [2.0.2] - 13.4.2021
 
 * Remove appVersion warning

@@ -16,7 +16,7 @@ This package helps you to detect current browser and version of the browser.
 In your project's `pubspec.yaml` add:
 ```yaml
 dependencies:
-  web_browser_detect: ^2.0.2
+  web_browser_detect: ^2.0.3
 ```
 
 ## How to Use
