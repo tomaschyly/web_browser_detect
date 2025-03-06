@@ -1,23 +1,27 @@
+enum BrowserAgent {
+  unknown('Unknown browser');
+
+  const BrowserAgent(this.browserName);
+  final String browserName;
+}
+
 class Browser {
-  factory Browser() => _singleton;
-  Browser._internal();
-  final bool isOpera = false;
-  final bool isFirefox = false;
-  final bool isSafari = false;
-  final bool isIE = false;
-  final bool isEdge = false;
-  final bool isChrome = false;
-  final bool isMobile = false;
-  final bool isTablet = false;
-  final String vendor = '';
-  final String userAgent = '';
-  final String appVersion = '';
-  final String appName = '';
-  final String platform = '';
-  final int browserVersion = -1;
+  const Browser();
 
-  static final Browser _singleton = Browser._internal();
+  Browser.detectFrom({
+    required String userAgent,
+    required String vendor,
+    required String appVersion,
+  }) {
+    userAgent = 'unknown';
+    vendor = 'unknown';
+    appVersion = 'unknown';
+  }
 
-  @override
-  String toString() => 'Non-web platform';
+  BrowserAgent get browserAgent => BrowserAgent.unknown;
+  String get browser => browserAgent.browserName;
+  String get version => 'Unsupported on mobile';
+
+  /// Returns null for unsupported platforms.
+  static Browser? detectOrNull() => null;
 }
