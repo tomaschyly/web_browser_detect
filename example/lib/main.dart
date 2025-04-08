@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:universal_html/html.dart';
 import 'package:web_browser_detect/web_browser_detect.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
       ),
       home: Material(
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('The browser is ${browser?.browser ?? 'Wrong platform'}'),
