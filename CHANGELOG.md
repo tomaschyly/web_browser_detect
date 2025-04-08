@@ -5,8 +5,7 @@
 - Added linting
 - Added support for opera and brave
 
-- ** Breaking Change **
-  bump minimum flutter version is now 3.0.0
+- **Breaking Change:** bump minimum flutter version is now **3.0.0**
 
 ## [2.0.3] - 2.6.2022
 
