@@ -1,24 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:web/web.dart';
+import 'package:web_browser_detect/src/abstract_class.dart';
+import 'package:web_browser_detect/src/enum.dart';
 
-enum BrowserAgent {
-  unknown('Unknown browser'),
-  chrome('Chrome'),
-  safari('Safari'),
-  firefox('Firefox'),
-  explorer('Internet Explorer'),
-  edge('Edge'),
-  edgeChromium('Chromium Edge'),
-  brave('Brave'),
-  opera('Opera');
-
-  const BrowserAgent(this.browserName);
-  final String browserName;
-}
-
-class Browser {
+class BrowserPlatform extends BrowserPlatformAbstract {
   /// Browser initialization
-  Browser() {
+  BrowserPlatform() {
     if (!kIsWeb) {
       throw Exception('Browser is supported only on the web platform');
     }
@@ -33,7 +20,7 @@ class Browser {
   }
 
   /// Browser initialization from provided userAgent or vendor, works cross-platform
-  Browser.detectFrom({
+  BrowserPlatform.detectFrom({
     required String userAgent,
     required String vendor,
     required String appVersion,
@@ -44,20 +31,23 @@ class Browser {
       appVersion: appVersion,
     );
   }
+  @override
   BrowserAgent get browserAgent =>
       _detected?.browserAgent ?? BrowserAgent.unknown;
 
+  @override
   String get browser => browserAgent.browserName;
 
+  @override
   String get version => _version;
 
   _BrowserDetection? _detected;
   String _version = 'Unknown version';
 
   /// Alternative initialization for cross-platform, returns null instead of Exception
-  static Browser? detectOrNull() {
+  static BrowserPlatform? detectOrNull() {
     try {
-      return Browser();
+      return BrowserPlatform();
     } on Exception catch (e) {
       debugPrint('Browser detection failed: $e');
       return null;
