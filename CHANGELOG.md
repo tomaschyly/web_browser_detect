@@ -1,3 +1,6 @@
+## [2.1.1]
+- Changed enum declaration to allow compilation on Non web platforms, when the `BrowserAgent` enum types are being used.
+
 ## [2.1.0] - 6.3.2025
 
 - Replaced universal_io with web package
