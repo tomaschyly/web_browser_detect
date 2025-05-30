@@ -6,7 +6,7 @@ repository: https://github.com/tomaschyly/web_browser_detect
 issue_tracker: https://github.com/tomaschyly/web_browser_detect/issues
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=3.0.0"
 
 dependencies:
@@ -20,5 +20,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^7.0.0
-
-flutter:
