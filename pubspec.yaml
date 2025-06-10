@@ -1,12 +1,12 @@
 name: web_browser_detect
 description: Flutter Web browser detection package. This package allows you to detect which browser and its version is in use.
-version: 2.1.0
+version: 2.1.1
 homepage: https://tomas-chyly.com/en/project/web-browser-detect-flutter/
 repository: https://github.com/tomaschyly/web_browser_detect
 issue_tracker: https://github.com/tomaschyly/web_browser_detect/issues
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=3.0.0"
 
 dependencies:
@@ -20,5 +20,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^7.0.0
-
-flutter:

@@ -1,14 +1,10 @@
-enum BrowserAgent {
-  unknown('Unknown browser');
+import 'package:web_browser_detect/src/abstract_class.dart';
+import 'package:web_browser_detect/src/enum.dart';
 
-  const BrowserAgent(this.browserName);
-  final String browserName;
-}
+class BrowserPlatform extends BrowserPlatformAbstract {
+  BrowserPlatform();
 
-class Browser {
-  const Browser();
-
-  Browser.detectFrom({
+  BrowserPlatform.detectFrom({
     required String userAgent,
     required String vendor,
     required String appVersion,
@@ -18,10 +14,13 @@ class Browser {
     appVersion = 'unknown';
   }
 
+  @override
   BrowserAgent get browserAgent => BrowserAgent.unknown;
+  @override
   String get browser => browserAgent.browserName;
+  @override
   String get version => 'Unsupported on mobile';
 
   /// Returns null for unsupported platforms.
-  static Browser? detectOrNull() => null;
+  static BrowserPlatform? detectOrNull() => null;
 }
