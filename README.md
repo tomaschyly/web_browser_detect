@@ -19,7 +19,7 @@ In your project's `pubspec.yaml` add:
 
 ```yaml
 dependencies:
-  web_browser_detect: ^2.1.0
+  web_browser_detect: ^2.2.0
 ```
 
 ## How to Use

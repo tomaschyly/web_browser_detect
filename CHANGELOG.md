@@ -1,5 +1,6 @@
-## [2.1.1]
+## [2.2.0]
 - Changed enum declaration to allow compilation on Non web platforms, when the `BrowserAgent` enum types are being used.
+- Codebase refactor
 
 ## [2.1.0] - 6.3.2025
 
