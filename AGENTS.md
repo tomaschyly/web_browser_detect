@@ -129,6 +129,7 @@ All three files must stay in sync for each release.
 - When working on a task that corresponds to a plan step, reference the relevant plan file and tick completed checklist items as part of the handoff.
 - When all items in a phase are complete, append `[DONE]` to its heading.
 - Before moving a completed plan to `plans/archive/`, ask the user to confirm that the plan is complete and no new steps will be added.
+- When archiving a plan, add `Finished: YYYY-MM-DD` immediately below its ID/title heading as the second line, using the date the plan is finished and moved to `plans/archive/`.
 
 ### Meeting-focused plan markers
 
