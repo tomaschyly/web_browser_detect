@@ -4,8 +4,9 @@ These instructions apply to the whole repository unless a deeper `AGENTS.md` ove
 
 ## Branch safety rule
 
-- For implementation work (any non-planning/non-question-only task), if the current branch is `main` or `master`, ask the user first whether to switch to a new `version/*` or `feature/*` branch before making edits.
+- For implementation work (any non-planning/non-question-only task), if the current branch is `main` or `master`, ask the user first whether to switch to a new `feature/*` branch before making edits.
 - Do not start code changes on `main`/`master` until the user confirms how to proceed.
+- **Exception — version bumps:** When the user asks to bump the package to a specific version, automatically create and switch to the `version/x.x.x` branch without asking.
 
 ## Release versioning rule
 
@@ -21,6 +22,14 @@ When releasing a new package version, always update these 3 files together:
 
 All three files must stay in sync for each release.
 
+- During every package version bump, check the package and example `pubspec.yaml` `environment` constraints against the project's Flutter toolchain and the package's supported minimum SDK versions.
+- When Flutter is upgraded, review the Dart SDK and Flutter constraints together so they remain compatible. Do not raise the package's minimum supported versions solely to match a newer local toolchain; consider consuming projects before changing those constraints.
+- When the user asks to bump the package to `x.x.x`, follow this order:
+  1. Ensure branch `version/x.x.x` exists and is checked out — create and switch to it automatically if missing, without asking the user.
+  2. Update the version in all three release files listed above.
+  3. Verify the package and example environment constraints and update them if the supported toolchain requirements changed.
+  4. Commit the release-file and related environment changes with message: `Next version`. Preserve unrelated work and exclude it from the commit.
+
 ## General coding conventions
 
 ### Imports
@@ -32,7 +41,7 @@ All three files must stay in sync for each release.
 
 - Add comments for functions at minimum.
 - Add additional comments around special or non-obvious logic.
-- Follow the comment style established in nearby Flutter/Dart code, including sentence-ending periods where applicable.
+- Follow the comment style established in nearby Flutter/Dart code; prefer omitting final sentence periods in new comments, as in the browser-detection implementation. Do not rewrite unrelated comments solely for punctuation.
 
 ### Runtime invariant handling
 
@@ -47,6 +56,7 @@ All three files must stay in sync for each release.
 - If multiple patterns exist, choose the one used in the closest relevant files unless the user explicitly asks otherwise.
 - When adding or moving methods, fields, constants, configuration values, or utilities, place them with related code rather than at the end of the file or the first convenient location.
 - Before editing a file, scan nearby declarations for the existing grouping and order pattern, then preserve it.
+- In a file centered on a primary class, mixin, extension, or other type, declare that primary type before supporting top-level declarations. Place helper data classes, enums, constants, typedefs, and similar supporting declarations after the primary type unless Dart or Flutter requires a different order.
 - For cross-file lists or registries that represent the same domain concept, keep their order consistent.
 
 ### Package architecture and public API
@@ -55,6 +65,12 @@ All three files must stay in sync for each release.
 - Do not expose internal implementation files unless they are part of the supported package API.
 - Keep helpers inside a feature file only when they are used exclusively by that feature; otherwise place them with the closest reusable domain code under `lib/src/`.
 - Avoid breaking public APIs and exports without explicit user approval. Document approved breaking changes prominently in `CHANGELOG.md`.
+
+### Example build method data processing
+
+- Keep example widget build methods focused on composing UI from already prepared values.
+- Prefer preparing derived collections when their source data changes instead of sorting, grouping, filtering, or calculating expensive statistics during every build.
+- Only perform transformations in build methods when they are trivial or depend on current inherited UI context.
 
 ### TODO ownership format
 
@@ -103,10 +119,19 @@ All three files must stay in sync for each release.
 - Use those nearby implementations as the primary reference for architecture, naming, platform handling, and public API decisions.
 - If patterns conflict, prefer the closest feature-equivalent example and call out the choice in your summary.
 
-### Tool fallback (`rg`)
+### IDE tools and reviewability
 
-- Prefer `rg`/`rg --files` for search when available.
-- If `rg` is not available or not working in the current environment, immediately fall back to `grep`/`find` and provide the user with concise `ripgrep` installation instructions for their OS, including at least one web reference.
+- Prefer tools and MCP integrations connected to the IDE/editor currently used for the project so changes, diagnostics, and execution results are easy for the user to inspect there.
+- JetBrains IDEs are the primary workflow. When available and suitable, prefer their IDE/MCP capabilities for symbol navigation, reference searches, refactoring, inspections, formatting, run configurations, and debugging. Confirm that the integration targets the correct project before using it.
+- For edits, use IDE-aware tools when they provide useful refactoring or review support; otherwise use focused file patches that remain easy to review in the IDE's version control diff. Keep changes scoped and preserve unrelated work.
+- When running builds or other validation, prefer the IDE's integrated terminal or run configurations when suitable so the user can inspect the output. Follow the validation requirements below regardless of the execution tool.
+- Other IDEs/editors are supported too: use their equivalent integrations when available. If an IDE integration is unavailable or unsuitable, continue with standard file, search, shell, and debugger tools without requiring the user to switch editors.
+- In the handoff, identify changed files and summarize validation results, including any IDE diagnostics or execution output the user should review. Do not assume external tool output is automatically visible in the IDE.
+
+### Text search fallback
+
+- For plain-text searches outside IDE tools, prefer `rg`/`rg --files`.
+- If `rg` is unavailable or not working, use `grep`/`find` and continue.
 
 ### Validation
 
@@ -126,7 +151,8 @@ All three files must stay in sync for each release.
 
 - Do not create a new plan file unless the user explicitly asks for one.
 - Keep active plans in `plans/` and completed plans in `plans/archive/`.
-- When working on a task that corresponds to a plan step, reference the relevant plan file and tick completed checklist items as part of the handoff.
+- Active plans must use checklists for implementation steps.
+- When working on a task that corresponds to a plan step, reference the relevant plan file and tick completed checklist items (change `- [ ]` to `- [x]`) as part of the handoff.
 - When all items in a phase are complete, append `[DONE]` to its heading.
 - Before moving a completed plan to `plans/archive/`, ask the user to confirm that the plan is complete and no new steps will be added.
 - When archiving a plan, add `Finished: YYYY-MM-DD` immediately below its ID/title heading as the second line, using the date the plan is finished and moved to `plans/archive/`.
@@ -134,6 +160,17 @@ All three files must stay in sync for each release.
 ### Meeting-focused plan markers
 
 - When a plan has points that need meeting discussion, add a `## Meeting focus` section near the top of the plan.
-- Use the labels `**[DECISION]**`, `**[VERIFY]**`, and `**[BLOCKER]**` for product or architecture choices, validation needs, and work that blocks dependent implementation.
+- Use GitLab-friendly text labels instead of relying on colors or custom styling.
+- Include this label legend in the meeting focus section:
+  - `**[DECISION]**` — needs a product or architecture choice before implementation can be finalized.
+  - `**[VERIFY]**` — needs review or validation, but likely does not need a product decision.
+  - `**[BLOCKER]**` — blocks dependent implementation work.
 - Include a short checklist of current focus items, and prefix the matching original checklist items with the same label.
 - Keep the meeting focus list curated; remove or tick items when their source checklist item is resolved.
+
+### Active example Flutter run defaults
+
+- When a Flutter example app run is already active, trigger a refresh after relevant Dart code changes without waiting for an explicit user prompt.
+- Prefer hot reload (`r`) for small UI-only changes.
+- Prefer hot restart (`R`) for browser-detection, state, model, service, or initialization changes where recreating app state is safer.
+- If hot reload or hot restart cannot be sent to the active process, restart the example app with the same target and entry point.
