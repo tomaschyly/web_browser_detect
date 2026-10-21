@@ -1,3 +1,12 @@
+## [2.3.1] - 21.10.2026
+
+- **Breaking Change:** bump minimum SDK constraints to `sdk: >=3.12.0 <4.0.0` and `flutter: >=3.44.0`.
+- Fixed `Browser.detectOrNull()` returning a non-null `Browser` on non-web platforms instead of `null` (regression since 2.2.0).
+- Fixed `Browser.detectFrom()` on non-web platforms, it detects browser from provided values again instead of always reporting unknown browser (regression since 2.1.0).
+- Fixed `RangeError` during version detection when nothing follows the browser name in userAgent.
+- `version` on non-web platforms now returns `Unsupported on non-web platform` instead of `Unsupported on mobile`.
+- Added tests.
+
 ## [2.3.0] - 12.4.2026
 
 - **Breaking Change:** bump minimum SDK constraints to `sdk: >=3.10.0 <4.0.0` and `flutter: >=3.38.0`.
