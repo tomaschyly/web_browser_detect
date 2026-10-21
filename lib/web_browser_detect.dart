@@ -31,7 +31,7 @@ class Browser extends BrowserPlatformAbstract {
     : _browserInstance = browserInstance;
 
   /// Internal instance of the browser detection
-  /// for multiplatform support and calls from web or mobile
+  /// for multiplatform support and calls from web or non-web platforms
   /// so code can be called without falling into Exception
   /// regardless of the platform
   browser_impl.BrowserPlatform? _browserInstance;
@@ -42,7 +42,8 @@ class Browser extends BrowserPlatformAbstract {
   @override
   String get browser => browserAgent.browserName;
   @override
-  String get version => _browserInstance?.version ?? 'Unsupported on mobile';
+  String get version =>
+      _browserInstance?.version ?? 'Unsupported on non-web platform';
 
   /// Alternative initialization for cross-platform, returns null instead of Exception
   static Browser? detectOrNull() {
