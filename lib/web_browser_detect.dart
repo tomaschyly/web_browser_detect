@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:web_browser_detect/src/abstract_class.dart';
 import 'package:web_browser_detect/src/browser.dart'
     if (dart.library.html) 'package:web_browser_detect/src/browser.dart'
@@ -27,6 +26,10 @@ class Browser extends BrowserPlatformAbstract {
     );
   }
 
+  /// Browser initialization from already detected platform instance
+  Browser._fromPlatform(browser_impl.BrowserPlatform browserInstance)
+    : _browserInstance = browserInstance;
+
   /// Internal instance of the browser detection
   /// for multiplatform support and calls from web or mobile
   /// so code can be called without falling into Exception
@@ -43,11 +46,11 @@ class Browser extends BrowserPlatformAbstract {
 
   /// Alternative initialization for cross-platform, returns null instead of Exception
   static Browser? detectOrNull() {
-    try {
-      return Browser();
-    } on Exception catch (e) {
-      debugPrint('Browser detection failed: $e');
-      return null;
-    }
+    // Platform implementation decides, stub returns null on non-web platforms
+    final browserInstance = browser_impl.BrowserPlatform.detectOrNull();
+
+    return browserInstance != null
+        ? Browser._fromPlatform(browserInstance)
+        : null;
   }
 }
