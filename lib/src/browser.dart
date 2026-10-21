@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:web/web.dart';
 import 'package:web_browser_detect/src/abstract_class.dart';
+import 'package:web_browser_detect/src/browser_detection.dart';
 import 'package:web_browser_detect/src/enum.dart';
 
 class BrowserPlatform extends BrowserPlatformAbstract {
@@ -12,7 +13,7 @@ class BrowserPlatform extends BrowserPlatformAbstract {
 
     final appVersion = window.navigator.appVersion;
 
-    _detectBrowser(
+    _detection = BrowserDetection.detectFrom(
       userAgent: window.navigator.userAgent,
       vendor: window.navigator.vendor,
       appVersion: appVersion,
@@ -24,26 +25,22 @@ class BrowserPlatform extends BrowserPlatformAbstract {
     required String userAgent,
     required String vendor,
     required String appVersion,
-  }) {
-    _detectBrowser(
-      userAgent: userAgent,
-      vendor: vendor,
-      appVersion: appVersion,
-    );
-  }
+  }) : _detection = BrowserDetection.detectFrom(
+         userAgent: userAgent,
+         vendor: vendor,
+         appVersion: appVersion,
+       );
 
   @override
-  BrowserAgent get browserAgent =>
-      _detected?.browserAgent ?? BrowserAgent.unknown;
+  BrowserAgent get browserAgent => _detection.browserAgent;
 
   @override
   String get browser => browserAgent.browserName;
 
   @override
-  String get version => _version;
+  String get version => _detection.version;
 
-  _BrowserDetection? _detected;
-  String _version = 'Unknown version';
+  late final BrowserDetection _detection;
 
   /// Alternative initialization for cross-platform, returns null instead of Exception
   static BrowserPlatform? detectOrNull() {
@@ -54,104 +51,4 @@ class BrowserPlatform extends BrowserPlatformAbstract {
       return null;
     }
   }
-
-  /// Detect current browser if it is known
-  void _detectBrowser({
-    required String userAgent,
-    required String vendor,
-    required String appVersion,
-  }) {
-    final detections = [
-      _BrowserDetection(
-        browserAgent: BrowserAgent.edgeChromium,
-        string: userAgent,
-        subString: 'Edg',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.chrome,
-        string: userAgent,
-        subString: 'Chrome',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.safari,
-        string: vendor,
-        subString: 'Apple',
-        versionSearch: 'Version',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.firefox,
-        string: userAgent,
-        subString: 'Firefox',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.explorer,
-        string: userAgent,
-        subString: 'MSIE',
-        versionSearch: 'MSIE',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.explorer,
-        string: userAgent,
-        subString: 'Trident',
-        versionSearch: 'rv',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.edge,
-        string: userAgent,
-        subString: 'Edge',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.brave,
-        string: userAgent,
-        subString: 'Brave',
-      ),
-      _BrowserDetection(
-        browserAgent: BrowserAgent.opera,
-        string: userAgent,
-        subString: 'OPR',
-      ),
-    ];
-
-    for (final detection in detections) {
-      if (detection.string.contains(detection.subString)) {
-        _detected = detection;
-
-        final versionSearchString =
-            detection.versionSearch ?? detection.subString;
-        var versionFromString = userAgent;
-        var index = versionFromString.indexOf(versionSearchString);
-        if (index == -1) {
-          versionFromString = appVersion;
-          index = versionFromString.indexOf(versionSearchString);
-        }
-
-        if (index == -1) {
-          _version = 'Unknown version';
-        } else {
-          _version = versionFromString
-              .substring(index + versionSearchString.length + 1);
-
-          if (_version.split(' ').length > 1) {
-            _version = _version.split(' ').firstOrNull ?? 'Unknown version';
-          }
-        }
-
-        break;
-      }
-    }
-  }
-}
-
-class _BrowserDetection {
-  final BrowserAgent browserAgent;
-  final String string;
-  final String subString;
-  final String? versionSearch;
-
-  const _BrowserDetection({
-    required this.browserAgent,
-    required this.string,
-    required this.subString,
-    this.versionSearch,
-  });
 }
